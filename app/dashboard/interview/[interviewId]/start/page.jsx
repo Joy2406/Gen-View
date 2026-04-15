@@ -14,6 +14,8 @@ import QuestionSection from './_components/QuestionSection'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { LoaderCircle } from 'lucide-react'
+import { useUser } from '@clerk/nextjs' // Added to identify the user for notifications
+import { toast } from 'sonner'
 
 import dynamic from 'next/dynamic'
 const RecordAnswerSection = dynamic(
@@ -22,14 +24,16 @@ const RecordAnswerSection = dynamic(
 )
 
 function StartInterview({ params }) {
+    // FIX: Next.js 15 requires unwrapping params before use
     const resolvedParams = use(params);
     const interviewId = resolvedParams.interviewId;
 
+    const { user } = useUser(); // Get logged-in user details
     const [mockInterviewQuestion, setMockInterviewQuestion] = useState();
     const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
     const [interviewData, setInterviewData] = useState();
     
-    // 1. HITL States
+    // HITL State
     const [waitingForCoach, setWaitingForCoach] = useState(false);
     const router = useRouter();
 
@@ -48,14 +52,41 @@ function StartInterview({ params }) {
         }
     }
 
-    // 2. Triggers the Operator Window and Wait Screen
-    const handleEndInterview = () => {
+    /**
+     * UPDATED: Triggers Resend Notification and switches to Wait Screen
+     * No longer opens a popup; sends a private email to the coach instead.
+     */
+    const handleEndInterview = async () => {
         setWaitingForCoach(true);
-        // Opens your private operator window in a new tab
-        window.open(`/operator/${interviewId}`, '_blank', 'width=1200,height=800');
+        
+        try {
+            // 1. Call your custom Resend API route
+            const response = await fetch('/api/notify-coach', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    interviewId: interviewId,
+                    userEmail: user?.primaryEmailAddress?.emailAddress || "Anonymous User"
+                }),
+            });
+
+            if (response.ok) {
+                toast.success("Human Coach has been notified for evaluation.");
+            } else {
+                console.error("Failed to send notification email.");
+            }
+        } catch (error) {
+            console.error("Error triggering notification:", error);
+            toast.error("Process saved, but coach notification failed.");
+        }
     }
 
-    // 3. POLLING: Checks if all answers are reviewed every 3 seconds
+    /**
+     * POLLING: Continues to check the database every 3 seconds.
+     * Redirects the user only when 'pending' status is cleared by the coach.
+     */
     useEffect(() => {
         let interval;
         if (waitingForCoach) {
@@ -66,7 +97,7 @@ function StartInterview({ params }) {
                         eq(UserAnswer.status, 'pending')
                     ));
 
-                // If no 'pending' rows remain, redirect the user
+                // If no 'pending' rows remain, the coach has finalized the review
                 if (result?.length === 0) {
                     setWaitingForCoach(false);
                     router.push(`/dashboard/interview/${interviewId}/feedback`);
@@ -85,17 +116,17 @@ function StartInterview({ params }) {
                     activeQuestionIndex={activeQuestionIndex}
                 />
 
-                {/* 4. Conditional UI: Camera or Wait Screen */}
+                {/* HITL UI: Shows "Please Wait" screen after submission */}
                 {waitingForCoach ? (
                     <div className='flex flex-col items-center justify-center p-10 bg-white rounded-xl border-2 h-[500px] shadow-sm'>
                         <LoaderCircle className='animate-spin w-16 h-16 text-gray-800 mb-6' />
                         <h2 className='text-3xl font-bold text-black mb-2 text-center'>Please Wait...</h2>
                         <p className='text-gray-500 text-center text-lg max-w-md'>
-                            Your answer has been processed by AI and sent to a Human Coach for evaluation. 
-                            This operator window is currently open.
+                            Your answers have been processed by AI and sent to a Human Coach for evaluation. 
+                            You will be redirected automatically once the review is complete.
                         </p>
-                        <p className='text-primary text-sm mt-8 animate-pulse font-bold uppercase'>
-                            Checking for coach feedback...
+                        <p className='text-primary text-sm mt-8 animate-pulse font-bold uppercase tracking-widest'>
+                            Waiting for coach feedback...
                         </p>
                     </div>
                 ) : (
@@ -107,7 +138,7 @@ function StartInterview({ params }) {
                 )}
             </div>
             
-            {/* 5. Navigation Controls: Hidden when waiting */}
+            {/* Navigation Controls: Hidden during evaluation wait state */}
             {!waitingForCoach && (
                 <div className='flex justify-end gap-6 mb-10 mt-10'>
                     {activeQuestionIndex > 0 && 
@@ -121,8 +152,8 @@ function StartInterview({ params }) {
                         </Button>
                     }
                     {activeQuestionIndex === mockInterviewQuestion?.length - 1 && 
-                        <Button variant="destructive" onClick={handleEndInterview}>
-                            End Interview
+                        <Button variant="destructive" className="px-10" onClick={handleEndInterview}>
+                            Submit & End Interview
                         </Button>
                     }
                 </div>
