@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "GenView AI",
-  description: "Advanced AI-driven interview platform with proprietary Human-in-the-Loop evaluation logic, developed by Joy Pasala.",
+  description: "Advanced AI-driven interview platform, developed by Joy Pasala.",
   icons: {
     icon: "/logo_gv.png", // This changes the small icon in the browser tab
   },
