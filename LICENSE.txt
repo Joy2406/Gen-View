@@ -1,0 +1,14 @@
+SET ALL RIGHTS RESERVED LICENSE
+
+Software Name: GenView - AI Interview Platform
+Copyright © 2026 Joy Pasala. All rights reserved.
+
+This software and all associated files, including the "Human-in-the-Loop" 
+architectural logic, are the sole intellectual property of Joy Pasala.
+
+Permission is NOT granted for any person or entity to:
+1. Copy, modify, or distribute the source code.
+2. Use the software for commercial purposes.
+3. Disclose the proprietary logic to third parties.
+
+Any unauthorized use of this software is a violation of copyright law.
