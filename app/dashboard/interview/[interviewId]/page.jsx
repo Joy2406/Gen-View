@@ -54,7 +54,7 @@ function Interview({ params }) {
                         <div className='w-full flex flex-col items-center'>
                             <WebcamIcon className='h-72 w-full my-7 p-20 bg-secondary rounded-lg border' />
                             <Button variant="ghost" className="w-full" onClick={() => setWebCamEnabled(true)}>
-                                Enable Web Cam and Microphone
+                                Enable Web Cam and Microphone before starting the interview!
                             </Button>
                         </div>
                     )}

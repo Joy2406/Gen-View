@@ -107,7 +107,7 @@ function AddNewInterview() {
                   <div className='my-3 text-left'>
                     <label className="block mb-1 font-semibold text-black">Job Description/ Tech Stack</label>
                     <Textarea 
-                      placeholder="Ex. React, NodeJs, MySql etc." 
+                      placeholder="Ex. React, NodeJs, MySql etc.(within 1 -2 lines)" 
                       required
                       className="text-black"
                       onChange={(event) => setJobDesc(event.target.value)} 
