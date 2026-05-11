@@ -21,6 +21,11 @@ function OperatorReview({ params }) {
     const { user, isLoaded } = useUser();
     const adminEmail = "joypasala2406@gmail.com"; 
 
+    // FIX: Safely calculate if the user is the admin by converting both to lowercase
+    const currentUserEmail = user?.primaryEmailAddress?.emailAddress?.toLowerCase();
+    const safeAdminEmail = adminEmail.toLowerCase();
+    const isAdmin = currentUserEmail === safeAdminEmail;
+
     const resolvedParams = use(params);
     const interviewId = resolvedParams.interviewId;
 
@@ -30,10 +35,11 @@ function OperatorReview({ params }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (interviewId && isLoaded && user?.primaryEmailAddress?.emailAddress === adminEmail) {
+        // Use the new safe isAdmin check
+        if (interviewId && isLoaded && isAdmin) {
             GetPendingAnswers();
         }
-    }, [interviewId, isLoaded, user]);
+    }, [interviewId, isLoaded, isAdmin]);
 
     const GetPendingAnswers = async () => {
         setLoading(true);
@@ -80,7 +86,8 @@ function OperatorReview({ params }) {
         }
     }
 
-    if (!isLoaded || (loading && user?.primaryEmailAddress?.emailAddress === adminEmail)) {
+    // Use the safe isAdmin check for the loading screen
+    if (!isLoaded || (loading && isAdmin)) {
         return (
             <div className='flex flex-col items-center justify-center h-screen bg-gray-50'>
                 <LoaderCircle className='animate-spin h-12 w-12 text-primary mb-4' />
@@ -89,15 +96,19 @@ function OperatorReview({ params }) {
         );
     }
 
-    if (user?.primaryEmailAddress?.emailAddress !== adminEmail) {
+    // Use the safe isAdmin check for the Privacy Wall
+    if (!isAdmin) {
         return (
             <div className='flex flex-col items-center justify-center h-screen bg-white p-10 text-center'>
                 <ShieldAlert className='h-24 w-24 text-red-500 mb-6' />
                 <h1 className='text-5xl font-black text-gray-900 tracking-tighter mb-4'>UNAUTHORIZED ACCESS</h1>
-                <p className='text-gray-500 text-xl max-w-lg'>
+                <p className='text-gray-500 text-xl max-w-lg mb-2'>
                     This evaluation window is strictly reserved for the Human Coach.
                 </p>
-                <Button className="mt-10 px-10 py-6 text-lg rounded-full" onClick={() => window.location.href='/dashboard'}>
+                <p className='text-gray-400 text-sm'>
+                    Logged in as: {user?.primaryEmailAddress?.emailAddress || "Guest"}
+                </p>
+                <Button className="mt-8 px-10 py-6 text-lg rounded-full" onClick={() => window.location.href='/dashboard'}>
                     Return to Dashboard
                 </Button>
             </div>
@@ -127,7 +138,6 @@ function OperatorReview({ params }) {
                     <span className='bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-bold uppercase'>Admin Mode</span>
                 </div>
                 
-                {/* FIXED: Removed 'text-xl' conflict, kept 'text-sm' for uppercase labels */}
                 <div className='space-y-2'>
                     <h3 className='font-bold text-gray-800 uppercase tracking-wide text-sm'>Current Question:</h3>
                     <p className='text-gray-700 text-xl leading-relaxed'>{pendingAnswers[activeIndex].question}</p>
