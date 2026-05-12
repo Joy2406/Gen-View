@@ -1,8 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "tailwindcss/preflight";
-@tailwind utilities;
 
+/* Tailwind v4: explicit content scan paths (auto-detection is unreliable on production builds with App Router) */
+@source "../**/*.{js,ts,jsx,tsx,mdx}";
 
 @custom-variant dark (&:is(.dark *));
 
