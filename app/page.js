@@ -223,7 +223,7 @@ function Hero() {
               <span className="w-9 h-9 rounded-full bg-gradient-to-br from-[#C2410C] to-[#9A3412] grid place-items-center text-white text-[12px] font-medium">P</span>
               <div className="leading-tight">
                 <p className="font-monoG text-[9.5px] uppercase tracking-[0.16em] text-[rgb(var(--gv-human))]">Reviewer assigned</p>
-                <p className="text-[13px] font-medium">Priya M. · <span className="text-[rgb(var(--gv-ink-3))]">ex-Stripe</span></p>
+                <p className="text-[13px] font-medium">Verified Human Coach. · <span className="text-[rgb(var(--gv-ink-3))]">ex-Stripe</span></p>
               </div>
             </div>
 
@@ -303,7 +303,7 @@ function HITL() {
                   <CheckCircle2 size={15} strokeWidth={2.2} />
                 </span>
                 <div>
-                  <p className="font-monoG text-[10px] uppercase tracking-[0.18em] text-[rgb(var(--gv-ink-3))]">Step 02 · Priya M. · ex-Stripe</p>
+                  <p className="font-monoG text-[10px] uppercase tracking-[0.18em] text-[rgb(var(--gv-ink-3))]">Step 02 · Verified Human Coach. · ex-Stripe</p>
                   <h3 className="text-[16px] font-medium tracking-tight text-[rgb(var(--gv-human))]">verified · final</h3>
                 </div>
               </div>
