@@ -10,11 +10,7 @@ import {
   AlertTriangle,
   Mic,
   Video,
-  ChevronRight,
-  Quote,
   Zap,
-  Eye,
-  Star,
   Play,
 } from "lucide-react";
 import Logo from "./_components/Logo";
@@ -176,12 +172,9 @@ function Hero() {
               <span className="w-1.5 h-1.5 rounded-full bg-[rgb(var(--gv-ai))] gv-pulse inline-block" />
               In private beta · 1.2k joined
             </span>
-            <span className="gv-chip">
-              <Star size={11} className="text-[rgb(var(--gv-human))]" strokeWidth={2.2} /> 4.9 · 312 hires
-            </span>
           </div>
 
-          <h1 className="text-[clamp(2.8rem,7.6vw,6rem)] font-medium leading-[0.94] tracking-[-0.04em] gv-rise gv-rise-2">
+          <h1 className="text-[clamp(2.6rem,6.6vw,5.4rem)] font-medium leading-[0.96] tracking-[-0.04em] gv-rise gv-rise-2">
             Don&apos;t just <span className="font-serif-i font-normal text-[rgb(var(--gv-ink-3))]">practice.</span><br />
             Get <span className="gv-strike text-[rgb(var(--gv-ink-3))]">judged</span> by{" "}
             <span className="gv-word font-serif-i font-normal text-[rgb(var(--gv-human))]" key={wIdx}>
@@ -189,9 +182,8 @@ function Hero() {
             </span>
           </h1>
 
-          <p className="mt-8 max-w-[54ch] text-[16.5px] leading-[1.6] text-[rgb(var(--gv-ink-2))] gv-rise gv-rise-3">
+          <p className="mt-7 max-w-[44ch] text-[16px] leading-[1.55] text-[rgb(var(--gv-ink-2))] gv-rise gv-rise-3">
             AI runs the mock. A real hiring-panel reviewer rewrites every wrong call before it lands in your inbox.
-            <span className="text-[rgb(var(--gv-ink))]"> The feedback you actually needed — written by someone who&apos;s said yes or no for a living.</span>
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-3 gv-rise gv-rise-4">
@@ -303,62 +295,18 @@ function Hero() {
   );
 }
 
-function RewriteMoment() {
-  return (
-    <section className="relative bg-[rgb(var(--gv-bg))] overflow-hidden" data-testid="rewrite-section">
-      <div className="absolute inset-0 gv-bg-dots opacity-[0.35] pointer-events-none" />
-      <div className="relative max-w-[1320px] mx-auto px-6 md:px-10 py-24 md:py-32">
-        <div className="max-w-[60ch] mb-14">
-          <p className="font-monoG text-[10.5px] uppercase tracking-[0.2em] text-[rgb(var(--gv-ink-3))]">§ 01.5 — The rewrite</p>
-          <h2 className="text-4xl md:text-[64px] font-medium tracking-[-0.04em] leading-[0.96] mt-4">
-            The AI is fast. <span className="font-serif-i font-normal text-[rgb(var(--gv-ink-3))]">A human is right.</span>
-          </h2>
-        </div>
-
-        <p className="font-serif-i text-[clamp(1.8rem,3.6vw,3rem)] leading-[1.25] text-[rgb(var(--gv-ink-3))] max-w-[95%]">
-          <span className="gv-strike">&quot;Solid answer. Use the STAR framework and quantify the result with metrics.&quot;</span>
-        </p>
-        <p className="mt-3 font-monoG text-[10.5px] uppercase tracking-[0.16em] text-[rgb(var(--gv-ai))]">AI · draft · 62% confidence</p>
-
-        <div className="my-8 md:my-12 flex items-center gap-4">
-          <span className="font-monoG text-[11px] uppercase tracking-[0.18em] text-[rgb(var(--gv-human))]">Human rewrite ↓</span>
-          <span className="flex-1 h-px bg-gradient-to-r from-[rgb(var(--gv-human))]/50 to-transparent" />
-        </div>
-
-        <p className="text-[clamp(1.8rem,3.6vw,3rem)] leading-[1.2] tracking-[-0.025em] text-[rgb(var(--gv-ink))] max-w-[95%] font-medium">
-          &quot;Forget STAR. The story didn&apos;t have a <span className="font-serif-i text-[rgb(var(--gv-human))]">cost.</span> Panels listen for what you <span className="underline decoration-[rgb(var(--gv-human))] decoration-[3px] underline-offset-[6px]">chose not to do</span>. Re-tell it with the rejected option.&quot;
-        </p>
-
-        <div className="mt-6 flex flex-wrap items-center gap-3">
-          <span className="gv-chip" style={{ borderColor: "rgba(194,65,12,0.3)", color: "rgb(var(--gv-human))" }}>
-            <CheckCircle2 size={11} strokeWidth={2.4} /> Verified by Priya M. · ex-Stripe
-          </span>
-          <span className="gv-chip">⏱ 3h 41m turnaround</span>
-          <span className="gv-chip">+ trade-off articulation</span>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function HITL() {
   return (
     <section id="hitl" className="relative" data-testid="hitl-section">
-      <div className="max-w-[1320px] mx-auto px-6 md:px-10 py-24 md:py-32">
-        <div className="grid grid-cols-12 gap-6 mb-14">
+      <div className="max-w-[1320px] mx-auto px-6 md:px-10 py-20 md:py-28">
+        <div className="grid grid-cols-12 gap-6 mb-12">
           <div className="col-span-12 md:col-span-3">
             <p className="font-monoG text-[10.5px] uppercase tracking-[0.2em] text-[rgb(var(--gv-ink-3))]">§ 02 / The loop</p>
           </div>
           <div className="col-span-12 md:col-span-9">
-            <h2 className="text-4xl md:text-[58px] font-medium tracking-[-0.035em] leading-[0.98]">
-              Every AI verdict goes through<br />
-              <span className="text-[rgb(var(--gv-ink-3))]">a </span>
-              <span className="font-serif-i font-normal text-[rgb(var(--gv-human))]">human review pass.</span>
+            <h2 className="text-3xl md:text-[44px] font-medium tracking-[-0.03em] leading-[1.05] max-w-[20ch]">
+              The AI drafts. <span className="font-serif-i font-normal text-[rgb(var(--gv-human))]">A human signs off.</span>
             </h2>
-            <p className="mt-6 max-w-[62ch] text-[16px] text-[rgb(var(--gv-ink-2))] leading-[1.65]">
-              The model is fast, but it&apos;s wrong often enough to ruin a real interview.
-              So every piece of feedback is double-checked by a reviewer who has actually sat on the other side of the table.
-            </p>
           </div>
         </div>
 
@@ -371,27 +319,24 @@ function HITL() {
                   <Sparkles size={15} strokeWidth={2} />
                 </span>
                 <div>
-                  <p className="font-monoG text-[10px] uppercase tracking-[0.18em] text-[rgb(var(--gv-ink-3))]">Step 01</p>
-                  <h3 className="text-[17px] font-medium tracking-tight">AI · initial draft</h3>
+                  <p className="font-monoG text-[10px] uppercase tracking-[0.18em] text-[rgb(var(--gv-ink-3))]">Step 01 · AI draft</p>
+                  <h3 className="text-[16px] font-medium tracking-tight text-[rgb(var(--gv-ink-2))]">unverified · 62%</h3>
                 </div>
               </div>
-              <span className="font-monoG text-[10px] uppercase tracking-[0.16em] text-[rgb(var(--gv-ai))] gv-hl rounded-full px-2.5 py-1" style={{ background: "rgba(207,250,254,0.4)" }}>unverified</span>
             </header>
 
-            <p className="font-monoG text-[10.5px] uppercase tracking-[0.16em] text-[rgb(var(--gv-ink-3))] mb-3">On the answer to &quot;Tell me about a hard trade-off&quot;</p>
-            <blockquote className="font-serif-i text-[22px] leading-[1.25] text-[rgb(var(--gv-ink))]">
-              &quot;Solid answer overall. Try to use the STAR framework more explicitly and quantify the result with metrics.&quot;
+            <blockquote className="font-serif-i text-[19px] md:text-[21px] leading-[1.3] text-[rgb(var(--gv-ink-2))]">
+              &quot;Solid answer. Use the STAR framework and quantify your result with metrics.&quot;
             </blockquote>
 
-            <ul className="mt-7 space-y-3 text-[13.5px] text-[rgb(var(--gv-ink-2))]">
+            <ul className="mt-6 space-y-2.5 text-[13px] text-[rgb(var(--gv-ink-2))]">
               {[
-                { label: "Generic STAR advice", warn: true },
-                { label: "Missed nuance: no trade-off articulated", warn: true },
-                { label: "Confidence 62% — flagged for review", warn: false },
-              ].map((it) => (
-                <li key={it.label} className="flex items-center gap-2.5">
-                  {it.warn ? <AlertTriangle size={13} className="text-[rgb(var(--gv-ai))]" strokeWidth={2.2} /> : <Eye size={13} className="text-[rgb(var(--gv-ink-3))]" strokeWidth={2.2} />}
-                  <span>{it.label}</span>
+                "Generic STAR advice",
+                "Missed: no trade-off articulated",
+              ].map((label) => (
+                <li key={label} className="flex items-center gap-2.5">
+                  <AlertTriangle size={12} className="text-[rgb(var(--gv-ai))]" strokeWidth={2.2} />
+                  <span>{label}</span>
                 </li>
               ))}
             </ul>
@@ -415,31 +360,19 @@ function HITL() {
                   <CheckCircle2 size={15} strokeWidth={2.2} />
                 </span>
                 <div>
-                  <p className="font-monoG text-[10px] uppercase tracking-[0.18em] text-[rgb(var(--gv-ink-3))]">Step 02</p>
-                  <h3 className="text-[17px] font-medium tracking-tight">Human · verified review</h3>
+                  <p className="font-monoG text-[10px] uppercase tracking-[0.18em] text-[rgb(var(--gv-ink-3))]">Step 02 · Priya M. · ex-Stripe</p>
+                  <h3 className="text-[16px] font-medium tracking-tight text-[rgb(var(--gv-human))]">verified · final</h3>
                 </div>
               </div>
-              <span className="font-monoG text-[10px] uppercase tracking-[0.16em] text-[rgb(var(--gv-human))] rounded-full px-2.5 py-1" style={{ background: "rgba(254,215,170,0.4)", border: "1px solid rgba(194,65,12,0.2)" }}>final</span>
             </header>
 
-            <p className="font-monoG text-[10.5px] uppercase tracking-[0.16em] text-[rgb(var(--gv-ink-3))] mb-3">Priya M. · ex-Stripe hiring panel · 4yr behavioral lead</p>
-            <blockquote className="font-serif-i text-[22px] leading-[1.25] text-[rgb(var(--gv-ink))]">
-              &quot;Forget STAR for a second. The story didn&apos;t have a <span className="text-[rgb(var(--gv-human))]">cost.</span> Panels listen for what you <span className="underline decoration-[rgb(var(--gv-human))] decoration-2 underline-offset-[5px]">chose not to do</span>. Re-tell it with the rejected option and your reasoning — that lands.&quot;
+            <blockquote className="font-serif-i text-[19px] md:text-[21px] leading-[1.3] text-[rgb(var(--gv-ink))]">
+              &quot;Forget STAR. The story has no <span className="text-[rgb(var(--gv-human))]">cost</span>. Panels listen for what you <span className="underline decoration-[rgb(var(--gv-human))] decoration-2 underline-offset-[5px]">chose not to do</span>.&quot;
             </blockquote>
 
-            <div className="mt-7 grid grid-cols-2 gap-3 text-[12.5px]">
-              <div className="gv-hl rounded-xl p-3.5">
-                <p className="font-monoG text-[10px] uppercase tracking-[0.16em] text-[rgb(var(--gv-ink-3))]">Suggested rewrite</p>
-                <p className="mt-1.5 font-serif-i text-[15px] leading-snug">&quot;We shipped X by deferring Y, because…&quot;</p>
-              </div>
-              <div className="gv-hl rounded-xl p-3.5">
-                <p className="font-monoG text-[10px] uppercase tracking-[0.16em] text-[rgb(var(--gv-ink-3))]">Skill flagged</p>
-                <p className="mt-1.5 font-medium text-[14px]">Decision narration</p>
-              </div>
-            </div>
-
-            <div className="mt-7 inline-flex items-center gap-2 font-monoG text-[10.5px] uppercase tracking-[0.16em] text-[rgb(var(--gv-human))]">
-              <Quote size={11} /> reviewed in 3h 41m
+            <div className="mt-6 flex items-center justify-between font-monoG text-[10.5px] uppercase tracking-[0.16em]">
+              <span className="text-[rgb(var(--gv-human))]">+ trade-off articulation</span>
+              <span className="text-[rgb(var(--gv-ink-3))]">3h 41m</span>
             </div>
           </article>
         </div>
@@ -451,15 +384,14 @@ function HITL() {
 function ProductPreview() {
   return (
     <section id="product" className="relative bg-[rgb(var(--gv-bg-soft))] gv-hl-t gv-hl-b" data-testid="product-section">
-      <div className="max-w-[1320px] mx-auto px-6 md:px-10 py-24 md:py-32">
-        <div className="grid grid-cols-12 gap-6 mb-14">
+      <div className="max-w-[1320px] mx-auto px-6 md:px-10 py-20 md:py-28">
+        <div className="grid grid-cols-12 gap-6 mb-12">
           <div className="col-span-12 md:col-span-3">
-            <p className="font-monoG text-[10.5px] uppercase tracking-[0.2em] text-[rgb(var(--gv-ink-3))]">§ 03 / In the booth</p>
+            <p className="font-monoG text-[10.5px] uppercase tracking-[0.2em] text-[rgb(var(--gv-ink-3))]">§ 03 / The booth</p>
           </div>
           <div className="col-span-12 md:col-span-9">
-            <h2 className="text-4xl md:text-[58px] font-medium tracking-[-0.035em] leading-[0.98]">
-              A live booth. <span className="font-serif-i font-normal">A real reviewer.</span><br />
-              <span className="text-[rgb(var(--gv-ink-3))]">And the answer you should&apos;ve given.</span>
+            <h2 className="text-3xl md:text-[44px] font-medium tracking-[-0.03em] leading-[1.05] max-w-[22ch]">
+              Live signals. <span className="font-serif-i font-normal text-[rgb(var(--gv-ink-3))]">Real reviewers in queue.</span>
             </h2>
           </div>
         </div>
@@ -564,43 +496,6 @@ function ProductPreview() {
   );
 }
 
-function HowItWorks() {
-  const steps = [
-    { n: "01", title: "Pick your panel",  body: "Behavioral, system design, case, or domain-specific. Pick role level and target company archetype." },
-    { n: "02", title: "Run the booth",    body: "Talk to the AI interviewer. It probes, rephrases and stress-tests like a real panel. Live signals on the side." },
-    { n: "03", title: "Human verdict",    body: "A reviewer from a real hiring panel rewrites the weak parts of the AI feedback — and gives you the answer they'd have wanted to hear." },
-  ];
-  return (
-    <section id="how" className="relative">
-      <div className="max-w-[1320px] mx-auto px-6 md:px-10 py-24 md:py-32">
-        <div className="grid grid-cols-12 gap-6 mb-14">
-          <div className="col-span-12 md:col-span-3">
-            <p className="font-monoG text-[10.5px] uppercase tracking-[0.2em] text-[rgb(var(--gv-ink-3))]">§ 04 / The flow</p>
-          </div>
-          <div className="col-span-12 md:col-span-9">
-            <h2 className="text-4xl md:text-[58px] font-medium tracking-[-0.035em] leading-[0.98]">
-              Three rounds. <span className="font-serif-i font-normal text-[rgb(var(--gv-ai))]">Compounding signal.</span>
-            </h2>
-          </div>
-        </div>
-
-        <ol className="grid grid-cols-1 md:grid-cols-3 gv-hl rounded-3xl overflow-hidden bg-[rgb(var(--gv-bg))]">
-          {steps.map((s, i) => (
-            <li key={s.n} className={`p-8 md:p-10 ${i < 2 ? "gv-hl-r" : ""} group hover:bg-[rgb(var(--gv-bg-soft))]/60 transition`}>
-              <div className="flex items-baseline justify-between">
-                <span className="font-serif-i text-5xl text-[rgb(var(--gv-ink))]">{s.n}</span>
-                <ArrowRight size={16} className="text-[rgb(var(--gv-ink-3))] group-hover:text-[rgb(var(--gv-ai))] group-hover:translate-x-1 transition" />
-              </div>
-              <h3 className="text-[22px] font-medium tracking-[-0.02em] mt-8">{s.title}</h3>
-              <p className="mt-3 text-[14.5px] leading-relaxed text-[rgb(var(--gv-ink-2))]">{s.body}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
-  );
-}
-
 function ReviewerWall() {
   const reviewers = [
     { n: "Priya M.",  r: "ex-Stripe",   t: "Behavioral · Sr PM",     c: "from-[#C2410C] to-[#9A3412]", q: "I'll tell you what panels actually flag for." },
@@ -610,14 +505,14 @@ function ReviewerWall() {
   ];
   return (
     <section id="reviewers" className="relative" data-testid="reviewer-wall">
-      <div className="max-w-[1320px] mx-auto px-6 md:px-10 py-24 md:py-32">
-        <div className="grid grid-cols-12 gap-6 mb-12">
+      <div className="max-w-[1320px] mx-auto px-6 md:px-10 py-20 md:py-28">
+        <div className="grid grid-cols-12 gap-6 mb-10">
           <div className="col-span-12 md:col-span-3">
-            <p className="font-monoG text-[10.5px] uppercase tracking-[0.2em] text-[rgb(var(--gv-ink-3))]">§ 04.5 — The bench</p>
+            <p className="font-monoG text-[10.5px] uppercase tracking-[0.2em] text-[rgb(var(--gv-ink-3))]">§ 04 / The bench</p>
           </div>
           <div className="col-span-12 md:col-span-9">
-            <h2 className="text-4xl md:text-[56px] font-medium tracking-[-0.035em] leading-[0.98]">
-              Reviewers who&apos;ve actually <span className="font-serif-i font-normal text-[rgb(var(--gv-human))]">sat on the panel.</span>
+            <h2 className="text-3xl md:text-[44px] font-medium tracking-[-0.03em] leading-[1.05] max-w-[22ch]">
+              Reviewers who&apos;ve <span className="font-serif-i font-normal text-[rgb(var(--gv-human))]">sat on the panel.</span>
             </h2>
           </div>
         </div>
@@ -649,40 +544,35 @@ function CTA() {
       <div className="gv-orb w-[460px] h-[460px] -top-32 right-10 gv-drift" style={{ background: "rgb(var(--gv-ai-soft))" }} aria-hidden />
       <div className="gv-orb w-[380px] h-[380px] bottom-0 -left-20 opacity-50 gv-drift-2" style={{ background: "rgb(var(--gv-human-soft))" }} aria-hidden />
 
-      <div className="relative max-w-[1320px] mx-auto px-6 md:px-10 py-24 md:py-32 grid grid-cols-12 gap-8">
+      <div className="relative max-w-[1320px] mx-auto px-6 md:px-10 py-20 md:py-28 grid grid-cols-12 gap-8">
         <div className="col-span-12 md:col-span-7">
           <p className="font-monoG text-[10.5px] uppercase tracking-[0.2em] text-[rgb(var(--gv-ink-3))]">§ 05 / Start</p>
-          <h2 className="text-5xl md:text-[72px] font-medium tracking-[-0.04em] leading-[0.95] mt-4">
-            Your next interview<br />
-            <span className="text-[rgb(var(--gv-ink-3))]">deserves a </span>
-            <span className="font-serif-i font-normal text-[rgb(var(--gv-human))]">second pair of eyes.</span>
+          <h2 className="text-4xl md:text-[56px] font-medium tracking-[-0.035em] leading-[1] mt-4 max-w-[18ch]">
+            Land the loop. <span className="font-serif-i font-normal text-[rgb(var(--gv-human))]">Free first round.</span>
           </h2>
-          <p className="mt-7 max-w-[54ch] text-[16px] text-[rgb(var(--gv-ink-2))] leading-relaxed">
-            One free mock + one human-verified review. No card. Land the loop.
+          <p className="mt-5 max-w-[44ch] text-[15px] text-[rgb(var(--gv-ink-2))] leading-relaxed">
+            One free mock. One human-verified review. No card.
           </p>
-          <div className="mt-10 flex flex-wrap items-center gap-3">
+          <div className="mt-8 flex flex-wrap items-center gap-3">
             <AuthCTA
               data-testid="cta-primary"
               className="gv-btn inline-flex items-center gap-2 bg-[rgb(var(--gv-ink))] text-[rgb(var(--gv-bg))] font-medium px-7 py-4 text-[14px] rounded-full gv-elev-2 cursor-pointer"
             >
-              Start free — get reviewed
+              Start free
               <ArrowUpRight size={15} strokeWidth={2} className="arrow" />
             </AuthCTA>
-            <a href="#how" className="inline-flex items-center gap-1.5 text-[14px] text-[rgb(var(--gv-ink))] px-5 py-4 gv-hl rounded-full bg-[rgb(var(--gv-bg))]/60 backdrop-blur hover:bg-[rgb(var(--gv-bg-soft))] transition">
-              How it works <ChevronRight size={14} />
-            </a>
           </div>
         </div>
 
         <aside className="col-span-12 md:col-span-5 md:pl-10 md:gv-hl-l flex flex-col justify-end">
-          <ul className="space-y-4 text-[14px]">
+          <ul className="space-y-3.5 text-[13.5px]">
             {[
-              "Reviewers from real hiring panels (FAANG, consulting, top startups).",
-              "Every AI verdict is double-checked before it reaches you.",
-              "Suggested correct answer, every time — not just feedback.",
+              "Real hiring-panel reviewers · FAANG, consulting, top startups.",
+              "Every AI verdict double-checked before it reaches you.",
+              "The answer they wanted to hear — not just feedback.",
             ].map((t, i) => (
-              <li key={i} className="flex items-start gap-3.5">
-                <span className="font-monoG text-[10.5px] mt-1 text-[rgb(var(--gv-human))] tracking-wider">0{i + 1}</span>
+              <li key={i} className="flex items-start gap-3">
+                <span className="font-monoG text-[10px] mt-0.5 text-[rgb(var(--gv-human))] tracking-wider">0{i + 1}</span>
                 <span className="text-[rgb(var(--gv-ink-2))] leading-relaxed">{t}</span>
               </li>
             ))}
@@ -747,10 +637,8 @@ export default function Home() {
       <StatusBar />
       <Nav />
       <Hero />
-      <RewriteMoment />
       <HITL />
       <ProductPreview />
-      <HowItWorks />
       <ReviewerWall />
       <CTA />
       <Footer />
