@@ -8,9 +8,6 @@ import {
   Sparkles,
   CheckCircle2,
   AlertTriangle,
-  Mic,
-  Video,
-  Zap,
   Play,
 } from "lucide-react";
 import Logo from "./_components/Logo";
@@ -26,15 +23,6 @@ const TRANSCRIPT = [
   { who: "AI",  text: "Tell me about a time you killed a feature your team wanted to ship." },
   { who: "You", text: "We were three weeks from a quarterly release. The team wanted an AI summarization toggle in every workspace…" },
   { who: "AI",  text: "Good context. Walk me to the moment you actually made the call to kill it." },
-];
-
-const TICKER = [
-  "INTERVIEW PREP, VERIFIED",
-  "AI DRAFTS — HUMANS DECIDE",
-  "NO HALLUCINATED FEEDBACK",
-  "MOCK SESSIONS · 24/7",
-  "FAANG · CONSULTING · PRODUCT · DATA",
-  "REVIEWERS FROM REAL HIRING PANELS",
 ];
 
 /* ---------- helpers ---------- */
@@ -60,24 +48,6 @@ function AuthCTA({ children, className = "", ...rest }) {
 }
 
 /* ---------- sections ---------- */
-
-function StatusBar() {
-  return (
-    <div className="gv-hl-b bg-[rgb(var(--gv-bg))]/80 backdrop-blur-xl">
-      <div className="max-w-[1320px] mx-auto px-6 md:px-10 h-9 flex items-center justify-between font-monoG text-[10.5px] tracking-[0.14em] uppercase text-[rgb(var(--gv-ink-3))]">
-        <span className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[rgb(var(--gv-ai))] gv-pulse inline-block" />
-          system online · reviewer queue · 4 active
-        </span>
-        <span className="hidden md:flex items-center gap-5">
-          <span>v 2.0.1</span>
-          <span>build · 2026.01</span>
-          <span className="text-[rgb(var(--gv-ink))]">↗ status</span>
-        </span>
-      </div>
-    </div>
-  );
-}
 
 function Nav() {
   return (
@@ -205,19 +175,6 @@ function Hero() {
               See the human review pass
             </a>
           </div>
-
-          <dl className="mt-14 grid grid-cols-3 max-w-2xl gv-rise gv-rise-5">
-            {[
-              { k: "12,408", v: "sessions · reviewed" },
-              { k: "98.2%", v: "AI calls · refined" },
-              { k: "<6h", v: "median · turnaround" },
-            ].map((s, i) => (
-              <div key={s.k} className={`${i > 0 ? "pl-6 gv-hl-l" : ""} ${i < 2 ? "pr-6" : ""}`}>
-                <dt className="text-[40px] md:text-[44px] font-medium tracking-[-0.045em] text-[rgb(var(--gv-ink))] leading-none">{s.k}</dt>
-                <dd className="font-monoG text-[10px] uppercase tracking-[0.16em] text-[rgb(var(--gv-ink-3))] mt-2 leading-tight">{s.v}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
 
         <div className="col-span-12 lg:col-span-5 relative min-h-[520px] gv-rise gv-rise-3">
@@ -277,20 +234,6 @@ function Hero() {
         </div>
       </div>
 
-      <div className="relative gv-hl-t gv-hl-b overflow-hidden bg-[rgb(var(--gv-bg-soft))]/60">
-        <div className="gv-marquee py-2.5 whitespace-nowrap font-monoG text-[10.5px] tracking-[0.18em] text-[rgb(var(--gv-ink-3))]">
-          {[...Array(2)].map((_, j) => (
-            <span key={j} className="inline-flex">
-              {TICKER.map((t, i) => (
-                <span key={`${j}-${i}`} className="inline-flex items-center">
-                  <span className="px-7">{t}</span>
-                  <span className="text-[rgb(var(--gv-ai))]">◆</span>
-                </span>
-              ))}
-            </span>
-          ))}
-        </div>
-      </div>
     </section>
   );
 }
@@ -381,250 +324,14 @@ function HITL() {
   );
 }
 
-function ProductPreview() {
-  return (
-    <section id="product" className="relative bg-[rgb(var(--gv-bg-soft))] gv-hl-t gv-hl-b" data-testid="product-section">
-      <div className="max-w-[1320px] mx-auto px-6 md:px-10 py-20 md:py-28">
-        <div className="grid grid-cols-12 gap-6 mb-12">
-          <div className="col-span-12 md:col-span-3">
-            <p className="font-monoG text-[10.5px] uppercase tracking-[0.2em] text-[rgb(var(--gv-ink-3))]">§ 03 / The booth</p>
-          </div>
-          <div className="col-span-12 md:col-span-9">
-            <h2 className="text-3xl md:text-[44px] font-medium tracking-[-0.03em] leading-[1.05] max-w-[22ch]">
-              Live signals. <span className="font-serif-i font-normal text-[rgb(var(--gv-ink-3))]">Real reviewers in queue.</span>
-            </h2>
-          </div>
-        </div>
-
-        <div className="bg-[rgb(var(--gv-bg))] gv-hl rounded-3xl gv-elev-3 overflow-hidden">
-          <div className="flex items-center justify-between gv-hl-b px-5 md:px-7 py-3 bg-[rgb(var(--gv-bg))]">
-            <div className="flex items-center gap-2 font-monoG text-[10.5px] uppercase tracking-[0.16em] text-[rgb(var(--gv-ink-2))]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[rgb(var(--gv-ai))] gv-pulse inline-block" />
-              Session live · Behavioral · Senior PM
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-[rgb(var(--gv-line-2))]" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[rgb(var(--gv-line-2))]" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[rgb(var(--gv-ink))]" />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-12 min-h-[480px]">
-            <div className="col-span-12 md:col-span-7 gv-hl-r p-7 md:p-10">
-              <p className="font-monoG text-[10.5px] uppercase tracking-[0.18em] text-[rgb(var(--gv-ink-3))]">Q3 / 5 · 04:12</p>
-              <h3 className="text-2xl md:text-[30px] font-medium tracking-[-0.025em] mt-2.5 leading-[1.1]">
-                Tell me about a time you killed a feature your team wanted to ship.
-              </h3>
-
-              <div className="mt-8 space-y-5">
-                <div className="flex gap-4">
-                  <span className="font-monoG text-[10px] uppercase tracking-[0.18em] text-[rgb(var(--gv-ai))] w-12 shrink-0 pt-1">AI</span>
-                  <p className="text-[14px] leading-relaxed text-[rgb(var(--gv-ink-2))]">Take a breath. Walk me through the context first — what was the team trying to ship?</p>
-                </div>
-                <div className="flex gap-4">
-                  <span className="font-monoG text-[10px] uppercase tracking-[0.18em] text-[rgb(var(--gv-ink-3))] w-12 shrink-0 pt-1">You</span>
-                  <p className="text-[14px] leading-relaxed text-[rgb(var(--gv-ink))]">
-                    We were three weeks from a quarterly release and the team wanted to add an AI summarization toggle to every workspace
-                    <span className="gv-caret font-monoG text-[rgb(var(--gv-ink-3))]">▍</span>
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-10 flex items-center gap-2">
-                <button className="gv-btn inline-flex items-center gap-2 bg-[rgb(var(--gv-ink))] text-[rgb(var(--gv-bg))] px-4 py-2.5 rounded-full font-monoG text-[10.5px] uppercase tracking-[0.16em]">
-                  <Mic size={12} /> Recording
-                </button>
-                <button className="inline-flex items-center gap-2 gv-hl px-4 py-2.5 rounded-full font-monoG text-[10.5px] uppercase tracking-[0.16em] text-[rgb(var(--gv-ink-2))] hover:text-[rgb(var(--gv-ink))] hover:bg-[rgb(var(--gv-bg-soft))] transition">
-                  <Video size={12} /> Camera
-                </button>
-                <button className="gv-btn ml-auto inline-flex items-center gap-2 bg-[rgb(var(--gv-human))] text-white px-4 py-2.5 rounded-full font-monoG text-[10.5px] uppercase tracking-[0.16em]">
-                  End & request review
-                </button>
-              </div>
-            </div>
-
-            <div className="col-span-12 md:col-span-5 p-7 md:p-10 bg-[rgb(var(--gv-bg-soft))]/40">
-              <p className="font-monoG text-[10.5px] uppercase tracking-[0.18em] text-[rgb(var(--gv-ai))] flex items-center gap-2"><Zap size={11} /> AI · live signals</p>
-              <div className="mt-5 space-y-4">
-                {[
-                  { k: "Structure", v: 72, c: "ai" },
-                  { k: "Specificity", v: 41, c: "human" },
-                  { k: "Trade-off articulation", v: 18, c: "human" },
-                  { k: "Outcome / metric", v: 0, c: "human" },
-                ].map((s) => (
-                  <div key={s.k}>
-                    <div className="flex items-baseline justify-between">
-                      <span className="text-[12.5px] text-[rgb(var(--gv-ink-2))]">{s.k}</span>
-                      <span className="font-monoG text-[10.5px] text-[rgb(var(--gv-ink-3))]">{s.v}%</span>
-                    </div>
-                    <div className="h-[3px] bg-[rgb(var(--gv-line))] mt-1.5 rounded-full overflow-hidden">
-                      <div
-                        className={`h-full rounded-full ${s.c === "ai" ? "bg-gradient-to-r from-[rgb(var(--gv-ai))] to-[#22D3EE]" : "bg-gradient-to-r from-[rgb(var(--gv-human))] to-[#F97316]"}`}
-                        style={{ width: `${s.v}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <hr className="my-7 border-[rgb(var(--gv-line))]" />
-
-              <p className="font-monoG text-[10.5px] uppercase tracking-[0.18em] text-[rgb(var(--gv-human))]">Human review queue</p>
-              <ul className="mt-4 space-y-3 text-[13px]">
-                {[
-                  { who: "Priya M.", role: "ex-Stripe", eta: "~3h", c: "from-[#06B6D4] to-[#0E7490]" },
-                  { who: "Daniel O.", role: "ex-Meta", eta: "~5h", c: "from-[#C2410C] to-[#9A3412]" },
-                  { who: "Sana R.", role: "ex-McKinsey", eta: "~6h", c: "from-[#0E0E10] to-[#3C4048]" },
-                ].map((r) => (
-                  <li key={r.who} className="flex items-center justify-between gv-hl-b pb-2.5">
-                    <span className="flex items-center gap-2.5">
-                      <span className={`w-6 h-6 rounded-full bg-gradient-to-br ${r.c} text-white text-[10.5px] font-medium grid place-items-center`}>{r.who[0]}</span>
-                      <span>
-                        <span className="font-medium text-[rgb(var(--gv-ink))]">{r.who}</span>
-                        <span className="text-[rgb(var(--gv-ink-3))]"> · {r.role}</span>
-                      </span>
-                    </span>
-                    <span className="font-monoG text-[10.5px] text-[rgb(var(--gv-ink-3))]">{r.eta}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ReviewerWall() {
-  const reviewers = [
-    { n: "Priya M.",  r: "ex-Stripe",   t: "Behavioral · Sr PM",     c: "from-[#C2410C] to-[#9A3412]", q: "I'll tell you what panels actually flag for." },
-    { n: "Daniel O.", r: "ex-Meta",     t: "System design · Staff",  c: "from-[#06B6D4] to-[#0E7490]", q: "Most candidates miss the same 2 trade-offs." },
-    { n: "Sana R.",   r: "ex-McKinsey", t: "Case · Engagement Mgr",  c: "from-[#0E0E10] to-[#3C4048]", q: "Structure first. Insight second. Then close hard." },
-    { n: "Aman K.",   r: "ex-Google",   t: "Behavioral · Director",  c: "from-[#C2410C] to-[#7C2D12]", q: "Seniority shows in the boring trade-offs." },
-  ];
-  return (
-    <section id="reviewers" className="relative" data-testid="reviewer-wall">
-      <div className="max-w-[1320px] mx-auto px-6 md:px-10 py-20 md:py-28">
-        <div className="grid grid-cols-12 gap-6 mb-10">
-          <div className="col-span-12 md:col-span-3">
-            <p className="font-monoG text-[10.5px] uppercase tracking-[0.2em] text-[rgb(var(--gv-ink-3))]">§ 04 / The bench</p>
-          </div>
-          <div className="col-span-12 md:col-span-9">
-            <h2 className="text-3xl md:text-[44px] font-medium tracking-[-0.03em] leading-[1.05] max-w-[22ch]">
-              Reviewers who&apos;ve <span className="font-serif-i font-normal text-[rgb(var(--gv-human))]">sat on the panel.</span>
-            </h2>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {reviewers.map((r, i) => (
-            <article key={r.n} className={`gv-review relative bg-[rgb(var(--gv-bg))] gv-hl rounded-3xl p-6 gv-elev-1 hover:gv-elev-2 overflow-hidden ${i % 2 ? "lg:translate-y-6" : ""}`}>
-              <div className={`absolute -top-12 -right-12 w-32 h-32 rounded-full bg-gradient-to-br ${r.c} opacity-25 blur-2xl`} />
-              <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${r.c} grid place-items-center text-white text-[16px] font-medium`}>{r.n[0]}</div>
-              <h3 className="mt-5 text-[18px] font-medium tracking-[-0.015em]">{r.n}</h3>
-              <p className="font-monoG text-[10.5px] uppercase tracking-[0.14em] text-[rgb(var(--gv-ink-3))] mt-1">{r.r} · {r.t}</p>
-              <p className="mt-5 font-serif-i text-[16px] leading-[1.4] text-[rgb(var(--gv-ink-2))]">&quot;{r.q}&quot;</p>
-              <div className="mt-5 gv-hl-t pt-3 flex items-center justify-between font-monoG text-[10px] uppercase tracking-[0.14em] text-[rgb(var(--gv-ink-3))]">
-                <span>· verified reviewer</span>
-                <ArrowUpRight size={12} className="text-[rgb(var(--gv-ink))]" />
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function CTA() {
-  return (
-    <section id="start" className="relative overflow-hidden">
-      <div className="absolute inset-0 gv-bg-grid opacity-50 pointer-events-none" />
-      <div className="gv-orb w-[460px] h-[460px] -top-32 right-10 gv-drift" style={{ background: "rgb(var(--gv-ai-soft))" }} aria-hidden />
-      <div className="gv-orb w-[380px] h-[380px] bottom-0 -left-20 opacity-50 gv-drift-2" style={{ background: "rgb(var(--gv-human-soft))" }} aria-hidden />
-
-      <div className="relative max-w-[1320px] mx-auto px-6 md:px-10 py-20 md:py-28 grid grid-cols-12 gap-8">
-        <div className="col-span-12 md:col-span-7">
-          <p className="font-monoG text-[10.5px] uppercase tracking-[0.2em] text-[rgb(var(--gv-ink-3))]">§ 05 / Start</p>
-          <h2 className="text-4xl md:text-[56px] font-medium tracking-[-0.035em] leading-[1] mt-4 max-w-[18ch]">
-            Land the loop. <span className="font-serif-i font-normal text-[rgb(var(--gv-human))]">Free first round.</span>
-          </h2>
-          <p className="mt-5 max-w-[44ch] text-[15px] text-[rgb(var(--gv-ink-2))] leading-relaxed">
-            One free mock. One human-verified review. No card.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <AuthCTA
-              data-testid="cta-primary"
-              className="gv-btn inline-flex items-center gap-2 bg-[rgb(var(--gv-ink))] text-[rgb(var(--gv-bg))] font-medium px-7 py-4 text-[14px] rounded-full gv-elev-2 cursor-pointer"
-            >
-              Start free
-              <ArrowUpRight size={15} strokeWidth={2} className="arrow" />
-            </AuthCTA>
-          </div>
-        </div>
-
-        <aside className="col-span-12 md:col-span-5 md:pl-10 md:gv-hl-l flex flex-col justify-end">
-          <ul className="space-y-3.5 text-[13.5px]">
-            {[
-              "Real hiring-panel reviewers · FAANG, consulting, top startups.",
-              "Every AI verdict double-checked before it reaches you.",
-              "The answer they wanted to hear — not just feedback.",
-            ].map((t, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <span className="font-monoG text-[10px] mt-0.5 text-[rgb(var(--gv-human))] tracking-wider">0{i + 1}</span>
-                <span className="text-[rgb(var(--gv-ink-2))] leading-relaxed">{t}</span>
-              </li>
-            ))}
-          </ul>
-        </aside>
-      </div>
-    </section>
-  );
-}
-
 function Footer() {
   return (
-    <footer className="relative bg-[#0A0A0B] text-[rgb(var(--gv-bg))] overflow-hidden">
-      <div className="absolute inset-0 gv-bg-grid opacity-[0.08]" aria-hidden />
-      <div className="gv-orb w-[420px] h-[420px] -top-40 -left-20 opacity-20" style={{ background: "#06B6D4" }} aria-hidden />
-
-      <div className="relative max-w-[1320px] mx-auto px-6 md:px-10 pt-20 pb-10">
-        <div className="grid grid-cols-12 gap-8">
-          <div className="col-span-12 md:col-span-5">
-            <Logo invert />
-            <p className="mt-6 text-[14px] text-white/60 leading-relaxed max-w-md">
-              Advanced AI-driven interview platform — every answer reviewed by a human who&apos;s actually been on the panel. Built by Joy Pasala.
-            </p>
-            <AuthCTA className="gv-btn inline-flex items-center gap-2 mt-7 bg-white text-[#0A0A0B] font-medium px-5 py-2.5 text-[13px] rounded-full cursor-pointer">
-              Start free <ArrowUpRight size={14} strokeWidth={2} className="arrow" />
-            </AuthCTA>
-          </div>
-          {[
-            { title: "Product", items: ["The HITL loop", "Live booth", "Reviewer roster", "Pricing"] },
-            { title: "Tracks",  items: ["Behavioral", "System design", "Case", "Data & ML"] },
-            { title: "Company", items: ["About", "Reviewers", "Careers", "Contact"] },
-          ].map((col) => (
-            <div key={col.title} className="col-span-6 md:col-span-2">
-              <p className="font-monoG text-[10px] uppercase tracking-[0.2em] text-white/45">{col.title}</p>
-              <ul className="mt-4 space-y-2.5 text-[13.5px]">
-                {col.items.map((it) => (
-                  <li key={it}><a href="#" className="gv-link text-white/85 hover:text-white">{it}</a></li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-20 border-t border-white/10 pt-10">
-          <span className="block text-[14vw] leading-[0.85] font-medium tracking-[-0.05em] text-white/95 select-none">
-            GenView<span className="font-serif-i text-[rgb(var(--gv-ai))]">.</span>
-          </span>
-        </div>
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-3 text-[11px] font-monoG uppercase tracking-[0.18em] text-white/45">
-          <span>© {new Date().getFullYear()} GenView · interview prep, verified.</span>
-          <span>built by joy pasala</span>
-        </div>
+    <footer className="relative bg-[rgb(var(--gv-bg))] gv-hl-t">
+      <div className="max-w-[1320px] mx-auto px-6 md:px-10 py-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <Logo />
+        <p className="font-monoG text-[10.5px] uppercase tracking-[0.18em] text-[rgb(var(--gv-ink-3))]">
+          © {new Date().getFullYear()} · built by Joy Pasala
+        </p>
       </div>
     </footer>
   );
@@ -634,13 +341,9 @@ function Footer() {
 export default function Home() {
   return (
     <div className="gv-root min-h-screen">
-      <StatusBar />
       <Nav />
       <Hero />
       <HITL />
-      <ProductPreview />
-      <ReviewerWall />
-      <CTA />
       <Footer />
     </div>
   );
