@@ -41,3 +41,13 @@ yarn-error.log*
 next-env.d.ts
 node_modules/@next/swc-linux-arm64-gnu/next-swc.linux-arm64-gnu.node
 node_modules/@next/swc-linux-arm64-musl/next-swc.linux-arm64-musl.node
+
+
+# Emergent workspace artifacts (not part of the app)
+/.emergent/
+/frontend/
+/memory/
+/test_reports/
+/test_result.md
+/design_guidelines.json
+/yarn.lock
