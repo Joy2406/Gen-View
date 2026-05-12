@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "tailwindcss/preflight";
-@import "tailwindcss";
-@import "tw-animate-css";
 @tailwind utilities;
 
 
@@ -124,4 +122,129 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* ============================================================
+   GenView v3 landing — design tokens, hairlines, animations
+   Scoped helper classes (no global resets). Safe to coexist
+   with the existing shadcn/oklch tokens above.
+   ============================================================ */
+
+:root {
+    --gv-bg: 250 250 249;
+    --gv-bg-soft: 244 243 240;
+    --gv-ink: 14 14 16;
+    --gv-ink-2: 60 64 72;
+    --gv-ink-3: 110 114 122;
+    --gv-line: 228 228 224;
+    --gv-line-2: 216 217 214;
+    --gv-ai: 6 182 212;
+    --gv-ai-soft: 207 250 254;
+    --gv-human: 194 65 12;
+    --gv-human-soft: 254 215 170;
+    --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+}
+
+.gv-root {
+    background: rgb(var(--gv-bg));
+    color: rgb(var(--gv-ink));
+    font-family: var(--font-geist-sans, "Geist"), ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: "ss01" on, "ss03" on, "cv11" on;
+    letter-spacing: -0.005em;
+}
+.gv-root ::selection { background: rgb(var(--gv-ink)); color: rgb(var(--gv-bg)); }
+
+.font-serif-i { font-family: var(--font-serif); font-style: italic; }
+.font-monoG   { font-family: var(--font-geist-mono, "Geist Mono"), ui-monospace, monospace; font-feature-settings: "ss02" on; }
+
+/* Hairlines */
+.gv-hl    { border: 1px solid rgb(var(--gv-line)); }
+.gv-hl-b  { border-bottom: 1px solid rgb(var(--gv-line)); }
+.gv-hl-t  { border-top: 1px solid rgb(var(--gv-line)); }
+.gv-hl-r  { border-right: 1px solid rgb(var(--gv-line)); }
+.gv-hl-l  { border-left: 1px solid rgb(var(--gv-line)); }
+
+/* Elevation */
+.gv-elev-1 { box-shadow: 0 1px 0 rgba(14,14,16,0.04), 0 1px 2px rgba(14,14,16,0.04); }
+.gv-elev-2 { box-shadow: 0 1px 0 rgba(14,14,16,0.04), 0 8px 24px -8px rgba(14,14,16,0.10), 0 2px 6px -2px rgba(14,14,16,0.06); }
+.gv-elev-3 { box-shadow: 0 1px 0 rgba(14,14,16,0.05), 0 24px 60px -20px rgba(14,14,16,0.18), 0 8px 24px -12px rgba(14,14,16,0.10); }
+
+.gv-orb { position: absolute; pointer-events: none; border-radius: 9999px; filter: blur(80px); opacity: 0.55; mix-blend-mode: multiply; }
+.gv-bg-dots { background-image: radial-gradient(rgba(14,14,16,0.10) 1px, transparent 1px); background-size: 22px 22px; background-position: -1px -1px; }
+.gv-bg-grid { background-image: linear-gradient(to right, rgba(14,14,16,0.045) 1px, transparent 1px), linear-gradient(to bottom, rgba(14,14,16,0.045) 1px, transparent 1px); background-size: 72px 72px; }
+.gv-conic { background: conic-gradient(from 200deg at 50% 50%, transparent 0deg, rgba(6,182,212,0.18) 60deg, transparent 140deg, rgba(194,65,12,0.14) 240deg, transparent 320deg); filter: blur(40px); }
+.gv-spot { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(600px circle at var(--mx,50%) var(--my,30%), rgba(6,182,212,0.10), transparent 60%); }
+
+/* Tilt + chip */
+.gv-tilt { transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(0.22,0.61,0.36,1); }
+.gv-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 10px;
+    border: 1px solid rgb(var(--gv-line));
+    border-radius: 9999px;
+    font-family: var(--font-geist-mono, "Geist Mono"), ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase;
+    background: rgb(var(--gv-bg)); color: rgb(var(--gv-ink-2));
+}
+
+/* Btn micro */
+.gv-btn { position: relative; overflow: hidden; transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.gv-btn:hover { transform: translateY(-1px); }
+.gv-btn:active { transform: translateY(0); }
+.gv-btn .arrow { transition: transform 0.3s cubic-bezier(0.22,0.61,0.36,1); }
+.gv-btn:hover .arrow { transform: translate(2px, -2px); }
+
+/* Link underline */
+.gv-link { position: relative; display: inline-block; }
+.gv-link::after { content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 0.4s cubic-bezier(0.22,0.61,0.36,1); }
+.gv-link:hover::after { transform: scaleX(1); }
+
+/* Marquee */
+@keyframes gvMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.gv-marquee { display: inline-flex; animation: gvMarquee 48s linear infinite; will-change: transform; }
+
+/* Rise */
+@keyframes gvRise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.gv-rise { animation: gvRise 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+.gv-rise-1 { animation-delay: 0.05s; }
+.gv-rise-2 { animation-delay: 0.13s; }
+.gv-rise-3 { animation-delay: 0.22s; }
+.gv-rise-4 { animation-delay: 0.32s; }
+.gv-rise-5 { animation-delay: 0.42s; }
+
+/* Blink + pulse */
+@keyframes gvBlink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+.gv-caret { animation: gvBlink 1s steps(2) infinite; }
+@keyframes gvPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(6,182,212,0.45);} 70% {box-shadow: 0 0 0 10px rgba(6,182,212,0);} }
+.gv-pulse { animation: gvPulse 1.8s ease-out infinite; }
+
+/* Scan line */
+@keyframes gvScan { 0% { transform: translateY(-10%); opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translateY(110%); opacity: 0; } }
+.gv-scan { position: absolute; left: 0; right: 0; height: 1.5px; background: linear-gradient(to right, transparent, rgba(6,182,212,0.7), transparent); animation: gvScan 4.2s ease-in-out infinite; }
+
+/* Strike-through reveal */
+@keyframes gvStrike { from { width: 0; } to { width: 100%; } }
+.gv-strike { position: relative; display: inline-block; }
+.gv-strike::after { content: ""; position: absolute; left: 0; top: 52%; height: 2px; background: rgb(var(--gv-human)); width: 0; animation: gvStrike 1.2s cubic-bezier(0.5,0,0.2,1) 0.5s forwards; }
+
+/* Word swap */
+@keyframes gvWordIn { from { opacity: 0; transform: translateY(40%) rotate(-2deg); } to { opacity: 1; transform: translateY(0) rotate(0); } }
+.gv-word { display: inline-block; animation: gvWordIn 0.65s cubic-bezier(0.22,0.61,0.36,1) both; }
+
+/* Drift */
+@keyframes gvDrift { 0% { transform: translate(0,0); } 50% { transform: translate(20px,-15px); } 100% { transform: translate(0,0); } }
+.gv-drift   { animation: gvDrift 14s ease-in-out infinite; }
+.gv-drift-2 { animation: gvDrift 18s ease-in-out infinite reverse; }
+
+/* Flow line dashes */
+@keyframes gvFlow { 0% { stroke-dashoffset: 18; } 100% { stroke-dashoffset: 0; } }
+.gv-flow path { animation: gvFlow 1.2s linear infinite; }
+
+/* Reviewer card */
+.gv-review { transition: transform 0.35s cubic-bezier(0.22,0.61,0.36,1), box-shadow 0.35s; }
+.gv-review:hover { transform: translateY(-4px) rotate(-0.4deg); }
+
+@media (prefers-reduced-motion: reduce) {
+    .gv-marquee, .gv-rise, .gv-caret, .gv-pulse, .gv-scan,
+    .gv-flow path, .gv-drift, .gv-drift-2, .gv-word, .gv-strike::after { animation: none !important; }
 }

@@ -1,0 +1,72 @@
+{
+  "theme": "light",
+  "archetype": "4 (Swiss & High-Contrast)",
+  "brand_identity": {
+    "concept": "Editorial Authority meets Human Intuition",
+    "description": "A high-contrast, Swiss-inspired editorial layout that completely avoids AI cliches (no purple gradients, no center-everything). The design creates a stark visual separation between the cold, precise AI (represented by structural grids and cyan tones) and the intuitive human evaluator (represented by warm ochre accents and human photography). It highlights the Human-in-the-loop (HITL) moat."
+  },
+  "colors": {
+    "background": "#F9FAFB",
+    "foreground": "#0A0A0A",
+    "primary": "#06B6D4",
+    "primary_foreground": "#FFFFFF",
+    "accent_human": "#C2410C",
+    "accent_human_foreground": "#FFFFFF",
+    "muted": "#E5E7EB",
+    "muted_foreground": "#4B5563",
+    "border": "#D1D5DB"
+  },
+  "typography": {
+    "heading_font": "Cabinet Grotesk, sans-serif",
+    "body_font": "IBM Plex Sans, sans-serif",
+    "mono_font": "JetBrains Mono, monospace",
+    "rules": {
+      "h1": "text-5xl sm:text-6xl font-black tracking-tighter leading-none",
+      "h2": "text-3xl sm:text-4xl font-bold tracking-tight leading-tight",
+      "h3": "text-xl sm:text-2xl font-bold tracking-tight",
+      "overline": "text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground",
+      "body": "text-base leading-relaxed text-foreground/80"
+    }
+  },
+  "spacing_and_layout": {
+    "container_padding": "p-8 md:p-12 lg:p-16",
+    "section_gap": "gap-24 md:gap-32",
+    "grid_system": "grid-cols-1 md:grid-cols-12 gap-8",
+    "surface_strategy": "Grid Borders (Technical Look). Use border-collapse styles with border-r and border-b for bento items to expose the grid skeleton. Break symmetry constantly."
+  },
+  "components": {
+    "button_primary": "bg-foreground text-background hover:bg-foreground/90 font-bold tracking-wide rounded-none px-8 py-4 transition-transform active:scale-95",
+    "button_accent": "bg-[#C2410C] text-white hover:bg-[#9A3412] font-bold tracking-wide rounded-none px-8 py-4 transition-transform active:scale-95 shadow-[4px_4px_0px_#0A0A0A]",
+    "card": "bg-white border-2 border-foreground rounded-none shadow-[8px_8px_0px_#0A0A0A] p-8",
+    "glass_panel": "backdrop-blur-2xl bg-white/70 border border-foreground/10 shadow-sm"
+  },
+  "media": {
+    "image_urls": [
+      {
+        "url": "https://images.unsplash.com/photo-1771936620743-7b360e109fff?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODF8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMHN0cnVjdHVyYWwlMjBncmlkJTIwc2hhZG93c3xlbnwwfHx8fDE3Nzg1NTEyODZ8MA&ixlib=rb-4.1.0&q=85",
+        "category": "hero_background_abstract",
+        "description": "Grid pattern window casting dark shadows. Use as a subtle architectural background overlay (low opacity) in the hero section to emphasize structure."
+      },
+      {
+        "url": "https://images.pexels.com/photos/15318754/pexels-photo-15318754.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "category": "human_reviewer",
+        "description": "Man deeply focused on work. Use in the 'Human in the Loop' section to represent the human expert verifying AI answers."
+      },
+      {
+        "url": "https://images.pexels.com/photos/12903275/pexels-photo-12903275.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "category": "interview_candidate",
+        "description": "Focused young woman working. Use in the feature section depicting the mock interview process."
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "1. Setup Fonts: Import Cabinet Grotesk (headings) and IBM Plex Sans (body) via standard web font providers or CDN. Do NOT use Inter.",
+    "2. Navigation: Create a sticky header with glassmorphism (bg-white/70, backdrop-blur-xl). Preserve the existing 'GenView' logo or use a stylized cyan text representation if asset missing. Include a stark 'Login' CTA.",
+    "3. Hero Section: Adopt an asymmetric editorial layout. Huge typography (text-6xl+) on the left saying 'Nail the Interview. Verified by Humans.' Right side should feature a stylized, overlapping composition combining the 'human_reviewer' image with technical grid lines. Do not center everything. Overlay a subtle grain/noise texture.",
+    "4. Human-in-the-Loop (HITL) Section (CRITICAL): Build a prominent visual comparison view. On the left, 'AI Initial Feedback' (styled with cyan borders, cold, precise). On the right, 'Human Expert Verification' (styled with the warm ochre accent, maybe using the 'button_accent' shadow style to pop out). Use a 'Neo-Brutalist' approach with hard black borders and solid shadows.",
+    "5. Product Previews (Interview Session UI): Use Shadcn components heavily customized to remove rounded corners (rounded-none). Create a mockup of a chat/video interface where the AI asks questions and the user responds. Use 'Grid Borders' style for the layout of this section.",
+    "6. Motion: Use framer-motion for simple, high-performance transitions. The HITL comparison cards should stagger in on scroll. Ensure you respect 'prefers-reduced-motion'.",
+    "7. Data Attributes: Add 'data-testid' to all buttons, CTAs, and interactive comparison elements (e.g., data-testid='login-cta', data-testid='hitl-comparison-card').",
+    "8. Footer: Massive padding (py-32), dark background (bg-foreground) contrasting with the light page, huge 'GenView' text, and simple column links."
+  ]
+}
