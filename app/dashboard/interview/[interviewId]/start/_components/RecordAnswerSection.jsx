@@ -65,7 +65,7 @@ function RecordAnswerSection({mockInterviewQuestion, activeQuestionIndex, interv
         try {
             const feedbackPrompt = "Question:" + mockInterviewQuestion[activeQuestionIndex]?.question +
                 ", User Answer:" + userAnswer + ", Based on the question and user answer," +
-                " please give us a rating out of 2 (in 0.5 increments like 0, 0.5, 1, 1.5, 2) and feedback as area of improvement in JSON format" +
+                " please give us a rating and feedback as area of improvement in JSON format" +
                 " with 'rating' and 'feedback' fields.";
 
             const result = await chatSession.sendMessage(feedbackPrompt);
@@ -112,7 +112,7 @@ function RecordAnswerSection({mockInterviewQuestion, activeQuestionIndex, interv
                 <h2 className='text-3xl font-bold text-gray-800 mb-2'>Please Wait...</h2>
                 <p className='text-gray-500 text-center text-lg max-w-md leading-relaxed'>
                     Your answer has been processed by AI and sent to a Human Coach for evaluation. 
-                    This operator window is currently open.
+                    This operator window is currently open. Please wait here.
                 </p>
                 <p className='text-primary text-sm mt-8 animate-pulse font-medium'>
                     Checking for coach feedback...
