@@ -1,3 +1,18 @@
+/**
+ * @project GenView AI Interview Platform
+ * @copyright 2026 Joy Pasala - All Rights Reserved
+ * @license Proprietary
+ *
+ * SCHEMA CHANGES vs previous version:
+ *   UserAnswer — added `videoUrl` and `videoPublicId` columns to support
+ *   video recording storage and clean Cloudinary deletion after review.
+ *
+ * After updating this file run ONE of the following in your terminal:
+ *   npm run db:push        ← if you use drizzle-kit push (no migration files)
+ *   npm run db:generate    ← if you track migration SQL files
+ *   then: npm run db:migrate
+ */
+
 import { pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
 
 export const mockInterview = pgTable('mockInterview', {
@@ -9,7 +24,7 @@ export const mockInterview = pgTable('mockInterview', {
     createdBy: varchar('createdBy').notNull(),
     createdAt: varchar('createdAt'),
     mockId: varchar('mockId').notNull()
-})
+});
 
 export const UserAnswer = pgTable('userAnswer', {
     id: serial('id').primaryKey(),
@@ -17,12 +32,19 @@ export const UserAnswer = pgTable('userAnswer', {
     question: varchar('question').notNull(),
     correctAns: text('correctAns'),
     userAns: text('userAns'),
-    feedback: text('feedback'), // This stores AI Feedback
+    feedback: text('feedback'),         // AI-generated feedback
     rating: varchar('rating'),
     userEmail: varchar('userEmail'),
     createdAt: varchar('createdAt'),
-    
-    // NEW FIELDS FOR HUMAN-IN-THE-LOOP
-    humanFeedback: text('humanFeedback'), // Stores "Additional Coach Notes"
-    status: varchar('status').default('pending'), // Tracks if the coach has reviewed it yet
-})
+
+    // ── Human-in-the-Loop fields ─────────────────────────────────────────
+    humanFeedback: text('humanFeedback'),           // Coach's written notes
+    status: varchar('status').default('pending'),   // pending → reviewed
+
+    // ── Video recording fields ────────────────────────────────────────────
+    // videoUrl      : full Cloudinary HTTPS URL — used by the operator to play the recording
+    // videoPublicId : Cloudinary public_id — used to delete the video after review
+    //                 stored separately so deletion never requires URL parsing
+    videoUrl: text('videoUrl'),
+    videoPublicId: varchar('videoPublicId'),
+});
