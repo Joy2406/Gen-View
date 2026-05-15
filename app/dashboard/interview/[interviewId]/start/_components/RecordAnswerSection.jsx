@@ -3,6 +3,9 @@
  * @copyright 2026 Joy Pasala - All Rights Reserved
  * @license Proprietary
  * @note This file contains Human-in-the-Loop (HITL) proprietary logic.
+ *
+ * CHANGE: AI prompt now explicitly asks for a 1–5 STAR-framework rating.
+ * The feedback page converts this to a /2 score per question.
  */
 
 "use client"
@@ -43,7 +46,7 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
         useLegacyResults: false
     });
 
-    // Only append NEW transcript results
+    // Only append NEW transcript results — fix for repetition bug
     useEffect(() => {
         if (results.length > processedCountRef.current) {
             const newResults = results.slice(processedCountRef.current);
@@ -87,10 +90,7 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
                 mediaRecorderRef.current.state !== 'inactive'
             ) {
                 mediaRecorderRef.current.onstop = () => {
-                    if (recordedChunksRef.current.length === 0) {
-                        resolve(null);
-                        return;
-                    }
+                    if (recordedChunksRef.current.length === 0) { resolve(null); return; }
                     const blob = new Blob(recordedChunksRef.current, { type: 'video/webm' });
                     resolve(blob);
                 };
@@ -101,25 +101,20 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
         });
     };
 
-    // ── DIRECT BROWSER → CLOUDINARY UPLOAD (bypasses Vercel size limits) ────
+    // Direct browser → Cloudinary upload (bypasses Vercel 4.5MB limit)
     const uploadVideo = async (blob) => {
         if (!blob) return { url: null, publicId: null };
         try {
-            // Build the public_id first so we can sign it
             const publicId = `genview/interviews/${interviewData?.mockId}/question_${activeQuestionIndex + 1}_${Date.now()}`;
 
-            // Step 1: get a signature from our lightweight backend route
             const sigRes = await fetch('/api/cloudinary-signature', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ publicId }),
             });
-
             if (!sigRes.ok) throw new Error('Failed to get upload signature');
             const { signature, timestamp, cloudName, apiKey } = await sigRes.json();
 
-            // Step 2: upload the blob DIRECTLY to Cloudinary from the browser
-            // This never touches Vercel so there is no 4.5MB function limit
             const formData = new FormData();
             formData.append('file', blob);
             formData.append('public_id', publicId);
@@ -135,12 +130,10 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
 
             if (!uploadRes.ok) {
                 const errData = await uploadRes.json();
-                console.error('[uploadVideo] Cloudinary error:', errData);
                 throw new Error(errData?.error?.message || 'Cloudinary upload failed');
             }
 
             const data = await uploadRes.json();
-            console.log('[uploadVideo] Success:', data.secure_url);
             return { url: data.secure_url ?? null, publicId: data.public_id ?? null };
 
         } catch (err) {
@@ -170,21 +163,45 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
 
         setLoading(true);
         try {
+            // ── UPDATED STAR PROMPT ──────────────────────────────────────────
+            // Asks for a strict integer 1–5 based on how many STAR components
+            // the candidate covered. The feedback page converts this to /2.
+            const feedbackPrompt = `
+You are an expert interview coach evaluating a candidate's answer using the STAR framework 
+(Situation, Task, Action, Result).
+
+Question: ${mockInterviewQuestion[activeQuestionIndex]?.question}
+Candidate's Answer: ${userAnswer}
+
+Rate the answer from 1 to 5 using ONLY these criteria — do not deviate:
+- Rating 1: Answer is completely off-topic or blank. No STAR components present.
+- Rating 2: Only 1 STAR component is present (e.g. only described the Situation).
+- Rating 3: Exactly 2 STAR components are present but the other 2 are missing.
+- Rating 4: 3 out of 4 STAR components are present but the answer lacks depth or specificity.
+- Rating 5: All 4 STAR components (Situation, Task, Action, Result) are clearly covered with strong specific detail.
+
+Return ONLY a valid JSON object with exactly two fields:
+- "rating": an integer between 1 and 5 (no decimals, no strings)
+- "feedback": a 2-3 sentence string explaining which STAR components were present, 
+  which were missing, and one specific thing the candidate should improve.
+
+Example format:
+{"rating": 3, "feedback": "Your answer covered the Situation and Action clearly but missed the Task and Result. Adding the business outcome and your specific responsibility would strengthen this answer significantly."}
+`;
+
             const [videoData, feedbackResult] = await Promise.all([
                 uploadVideo(videoBlob),
-                chatSession.sendMessage(
-                    "Question:" + mockInterviewQuestion[activeQuestionIndex]?.question +
-                    ", User Answer:" + userAnswer +
-                    ", Based on the question and user answer, please give us a rating and feedback" +
-                    " as area of improvement in JSON format with 'rating' and 'feedback' fields."
-                )
+                chatSession.sendMessage(feedbackPrompt)
             ]);
 
-            const mockJsonResp = feedbackResult.response.text()
+            const rawText = feedbackResult.response.text()
                 .replace(/```json/g, '')
                 .replace(/```/g, '')
                 .trim();
-            const JsonFeedbackResp = JSON.parse(mockJsonResp);
+            const JsonFeedbackResp = JSON.parse(rawText);
+
+            // Clamp rating to 1–5 in case the model misbehaves
+            const safeRating = Math.min(5, Math.max(1, Number(JsonFeedbackResp?.rating) || 1));
 
             const resp = await db.insert(UserAnswer).values({
                 mockIdRef: interviewData?.mockId,
@@ -192,7 +209,7 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
                 correctAns: mockInterviewQuestion[activeQuestionIndex]?.answer,
                 userAns: userAnswer,
                 feedback: JsonFeedbackResp?.feedback,
-                rating: JsonFeedbackResp?.rating,
+                rating: String(safeRating),
                 userEmail: user?.primaryEmailAddress?.emailAddress,
                 createdAt: moment().format('DD-MM-YYYY'),
                 status: 'pending',
