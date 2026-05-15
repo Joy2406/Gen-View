@@ -30,7 +30,6 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
     const recordedChunksRef = useRef([]);
     const [isVideoReady, setIsVideoReady] = useState(false);
 
-    // FIX 2: track how many results already appended
     const processedCountRef = useRef(0);
 
     const {
@@ -44,7 +43,7 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
         useLegacyResults: false
     });
 
-    // FIX 2: only append NEW results, never re-process old ones
+    // Only append NEW transcript results
     useEffect(() => {
         if (results.length > processedCountRef.current) {
             const newResults = results.slice(processedCountRef.current);
@@ -102,32 +101,56 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
         });
     };
 
-    // Returns { url, publicId } — both saved to DB
+    // ── DIRECT BROWSER → CLOUDINARY UPLOAD (bypasses Vercel size limits) ────
     const uploadVideo = async (blob) => {
         if (!blob) return { url: null, publicId: null };
         try {
-            const formData = new FormData();
-            const filename = `interview_${interviewData?.mockId}_q${activeQuestionIndex + 1}_${Date.now()}.webm`;
-            formData.append('video', blob, filename);
-            formData.append('mockId', interviewData?.mockId ?? '');
-            formData.append('questionIndex', String(activeQuestionIndex));
+            // Build the public_id first so we can sign it
+            const publicId = `genview/interviews/${interviewData?.mockId}/question_${activeQuestionIndex + 1}_${Date.now()}`;
 
-            const res = await fetch('/api/upload-video', {
+            // Step 1: get a signature from our lightweight backend route
+            const sigRes = await fetch('/api/cloudinary-signature', {
                 method: 'POST',
-                body: formData,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ publicId }),
             });
 
-            if (!res.ok) throw new Error('Upload failed');
-            const data = await res.json();
-            return { url: data.url ?? null, publicId: data.publicId ?? null };
+            if (!sigRes.ok) throw new Error('Failed to get upload signature');
+            const { signature, timestamp, cloudName, apiKey } = await sigRes.json();
+
+            // Step 2: upload the blob DIRECTLY to Cloudinary from the browser
+            // This never touches Vercel so there is no 4.5MB function limit
+            const formData = new FormData();
+            formData.append('file', blob);
+            formData.append('public_id', publicId);
+            formData.append('signature', signature);
+            formData.append('timestamp', String(timestamp));
+            formData.append('api_key', apiKey);
+            formData.append('resource_type', 'video');
+
+            const uploadRes = await fetch(
+                `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`,
+                { method: 'POST', body: formData }
+            );
+
+            if (!uploadRes.ok) {
+                const errData = await uploadRes.json();
+                console.error('[uploadVideo] Cloudinary error:', errData);
+                throw new Error(errData?.error?.message || 'Cloudinary upload failed');
+            }
+
+            const data = await uploadRes.json();
+            console.log('[uploadVideo] Success:', data.secure_url);
+            return { url: data.secure_url ?? null, publicId: data.public_id ?? null };
+
         } catch (err) {
-            console.error('Video upload error:', err);
+            console.error('[uploadVideo] Error:', err);
             toast.error('Video could not be saved, but your answer was recorded.');
             return { url: null, publicId: null };
         }
     };
 
-    // FIX 1: user-controlled stop only — no useEffect on isRecording
+    // User explicitly clicks stop — no auto-submit
     const StartStopRecording = async () => {
         if (isRecording) {
             stopSpeechToText();
@@ -196,7 +219,6 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
         }
     };
 
-    // "Please Wait" screen after final question
     if (isInterviewComplete) {
         return (
             <div className='flex flex-col items-center justify-center mt-20 p-10 bg-gray-50 rounded-xl shadow-sm border h-[500px] w-full'>
@@ -225,6 +247,8 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
                 />
                 <Webcam
                     ref={webcamRef}
+                    audio={true}
+                    muted={true}
                     mirrored={true}
                     style={{ height: 500, width: 500, zIndex: 10 }}
                     onUserMedia={() => setIsVideoReady(true)}
